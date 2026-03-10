@@ -2,6 +2,11 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import MagneticWordmark from "./MagneticWordmark";
+
+// Load canvas lazily — no SSR needed
+const SandCanvas = dynamic(() => import("./SandCanvas"), { ssr: false });
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -13,17 +18,20 @@ const links = [
 export default function HomeHero() {
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-8 overflow-hidden">
+      {/* Sand particle canvas — full viewport, behind everything */}
+      <SandCanvas />
+
       {/* Subtle radial glow */}
       <div
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(201,185,154,0.06) 0%, transparent 70%)",
+            "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(10,10,10,0.55) 0%, transparent 70%)",
         }}
       />
 
       <div className="relative z-10 flex flex-col items-center text-center gap-12">
-        {/* Wordmark */}
+        {/* Wordmark — magnetic letters */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,17 +44,7 @@ export default function HomeHero() {
           >
             est. 2013
           </span>
-          <h1
-            className="font-display font-light leading-none text-foreground"
-            style={{
-              fontSize: "clamp(3.5rem,10vw,9rem)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            STRAND
-            <span style={{ color: "var(--accent)" }}>&amp;</span>
-            STONE
-          </h1>
+          <MagneticWordmark />
           <span
             className="font-mono text-[10px] uppercase select-none"
             style={{ letterSpacing: "0.3em", color: "var(--muted)" }}
@@ -102,7 +100,7 @@ export default function HomeHero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9, ease, delay: 1.0 }}
-        className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10"
       >
         <div
           className="font-mono text-[9px] text-center"
