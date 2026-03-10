@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "google-analytics": {
+      "command": "pipx",
+      "args": ["run", "analytics-mcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/PATH/TO/your-credentials.json",
+        "GOOGLE_PROJECT_ID": "strandandstonellc"
+      }
+    }
+  }
+}
