@@ -8,19 +8,19 @@ const dur = 0.8;
 
 const founders = [
   {
-    name: "Founder I",
-    role: "Creative Direction",
-    bio: "Placeholder — add name and bio.",
-  },
-  {
-    name: "Founder II",
-    role: "Technology",
-    bio: "Placeholder — add name and bio.",
-  },
-  {
-    name: "Founder III",
+    name: "Phil Boscarino",
     role: "Strategy",
-    bio: "Placeholder — add name and bio.",
+    bio: "Connects the dots between vision and execution — ensuring every decision serves a purpose and every project leaves a mark worth making.",
+  },
+  {
+    name: "John Meeker",
+    role: "Technology",
+    bio: "Builds the systems underneath — turning ambitious ideas into reliable, performant experiences that hold up under pressure and scale with intention.",
+  },
+  {
+    name: "Cameron Meeker",
+    role: "Creative",
+    bio: "Shapes the visual language of every project — bringing a sharp eye for craft, restraint, and the kind of design that feels inevitable in hindsight.",
   },
 ];
 
