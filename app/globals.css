@@ -22,7 +22,43 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Grain texture overlay */
+/* ── Branded text selection ── */
+::selection {
+  background-color: rgba(201, 185, 154, 0.25);
+  color: #F0EDE8;
+}
+
+::-moz-selection {
+  background-color: rgba(201, 185, 154, 0.25);
+  color: #F0EDE8;
+}
+
+/* ── Branded scrollbar (WebKit) ── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) var(--background);
+}
+
+/* ── Grain texture overlay ── */
 body::before {
   content: "";
   position: fixed;

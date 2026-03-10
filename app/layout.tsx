@@ -93,18 +93,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
-  verification: {
-    // Add Google Search Console verification token here when available
-    // google: "your-verification-token",
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
-    shortcut: "/favicon.ico",
-  },
+  // Google Search Console: add verification token when available
+  // verification: { google: "your-token" },
   manifest: "/manifest.webmanifest",
 };
 
