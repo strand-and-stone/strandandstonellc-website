@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Strand & Stone LLC — Website
 
-## Getting Started
+Marketing site for [Strand & Stone LLC](https://strandandstonellc.com). Next.js 14 (App Router), deployed on Vercel.
 
-First, run the development server:
+## Stack
+
+- **Framework:** Next.js 14, TypeScript, Tailwind CSS
+- **Motion:** Framer Motion
+- **Fonts:** Cormorant Garamond (display), DM Mono (body) via `next/font`
+- **Analytics:** Google Analytics 4 (gtag)
+- **Host:** Vercel
+
+## Repo
+
+- **GitHub:** [strand-and-stone/strandandstonellc-website](https://github.com/strand-and-stone/strandandstonellc-website)
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement ID (e.g. `G-RMZGVPXJ69`). Optional; falls back to hardcoded ID. |
 
-## Learn More
+Set in Vercel under **Settings → Environment Variables** for production.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pushes to `main` trigger automatic deploys on Vercel. Primary domain: **strandandstonellc.com**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+- `app/` — App Router pages and layout
+- `app/components/` — Home hero, sand canvas, magnetic wordmark, ethos/projects content
+- `app/not-found.tsx` — Custom 404
+- `public/` — Static assets (e.g. sitemap)
+- `.cursor/` — Cursor/MCP config (e.g. Google Analytics MCP)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` — Local dev server
+- `npm run build` — Production build
+- `npm run start` — Run production build locally
+- `npm run lint` — ESLint
