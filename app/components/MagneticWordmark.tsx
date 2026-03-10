@@ -2,8 +2,8 @@
 
 import { useRef, useCallback, useEffect } from "react";
 
-const MAGNETIC_RADIUS = 180;
-const MAGNETIC_STRENGTH = 0.22;
+const MAGNETIC_RADIUS = 160;
+const MAGNETIC_STRENGTH = 0.10;
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -25,8 +25,8 @@ function MagneticLetter({ char, className, style, isAmpersand }: MagneticLetterP
   const animate = useCallback(() => {
     const curr = currentOffset.current;
     const tgt = targetOffset.current;
-    curr.x = lerp(curr.x, tgt.x, 0.08);
-    curr.y = lerp(curr.y, tgt.y, 0.08);
+    curr.x = lerp(curr.x, tgt.x, 0.06);
+    curr.y = lerp(curr.y, tgt.y, 0.06);
     // Write directly to DOM — no setState, no re-render
     if (ref.current) {
       ref.current.style.transform = `translate(${curr.x.toFixed(2)}px, ${curr.y.toFixed(2)}px)`;
@@ -51,8 +51,8 @@ function MagneticLetter({ char, className, style, isAmpersand }: MagneticLetterP
     if (dist < MAGNETIC_RADIUS) {
       const force = (1 - dist / MAGNETIC_RADIUS) * MAGNETIC_STRENGTH;
       targetOffset.current = {
-        x: dx * force * 18,
-        y: dy * force * 10,
+        x: dx * force * 10,
+        y: dy * force * 5,
       };
     } else {
       targetOffset.current = { x: 0, y: 0 };

@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, DM_Mono } from "next/font/google";
+import JsonLd from "./components/JsonLd";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -7,25 +8,104 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
+  display: "swap",
+  preload: true,
 });
 
 const dmMono = DM_Mono({
   variable: "--font-dm-mono",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+  display: "swap",
+  preload: true,
 });
 
+const BASE_URL = "https://strandandstonellc.com";
+
+export const viewport: Viewport = {
+  themeColor: "#C9B99A",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  title: "Strand & Stone LLC",
-  description: "Crafting unique digital experiences. Founded 2013, Santa Monica.",
-  metadataBase: new URL("https://strandandstonellc.com"),
-  openGraph: {
-    title: "Strand & Stone LLC",
-    description: "Crafting unique digital experiences.",
-    url: "https://strandandstonellc.com",
-    siteName: "Strand & Stone LLC",
-    type: "website",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: "Strand & Stone LLC — Digital Studio",
+    template: "%s | Strand & Stone LLC",
   },
+  description:
+    "Strand & Stone LLC is a boutique digital studio crafting unique digital experiences. Founded in 2013 in Santa Monica, CA by three friends with a shared vision for the intersection of craft and technology.",
+  keywords: [
+    "digital studio",
+    "digital experiences",
+    "web development",
+    "interactive design",
+    "brand identity",
+    "Santa Monica",
+    "Strand and Stone",
+    "Strand & Stone",
+  ],
+  authors: [{ name: "Strand & Stone LLC", url: BASE_URL }],
+  creator: "Strand & Stone LLC",
+  publisher: "Strand & Stone LLC",
+  category: "technology",
+  classification: "Digital Studio",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: BASE_URL,
+    siteName: "Strand & Stone LLC",
+    title: "Strand & Stone LLC — Digital Studio",
+    description:
+      "Boutique digital studio crafting unique digital experiences. Founded 2013, Santa Monica, CA.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Strand & Stone LLC — Digital Studio",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Strand & Stone LLC — Digital Studio",
+    description:
+      "Boutique digital studio crafting unique digital experiences. Founded 2013, Santa Monica, CA.",
+    images: ["/og-image.png"],
+    creator: "@strandandstone",
+    site: "@strandandstone",
+  },
+  alternates: {
+    canonical: BASE_URL,
+  },
+  verification: {
+    // Add Google Search Console verification token here when available
+    // google: "your-verification-token",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/favicon.ico",
+  },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
@@ -34,8 +114,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${dmMono.variable}`}>
-      <body className="antialiased">{children}</body>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${dmMono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className="antialiased">
+        <JsonLd />
+        {children}
+      </body>
     </html>
   );
 }
