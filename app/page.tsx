@@ -4,14 +4,14 @@ import HomeHero from "./components/HomeHero";
 export const metadata: Metadata = {
   title: "Strand & Stone LLC — Digital Studio",
   description:
-    "Strand & Stone LLC is a boutique digital studio crafting unique digital experiences. Founded in 2013 in Santa Monica, CA.",
+    "We build digital experiences that don't apologize for being good. Strand & Stone — founded 2013, Santa Monica.",
   alternates: {
     canonical: "https://strandandstonellc.com",
   },
   openGraph: {
     title: "Strand & Stone LLC — Digital Studio",
     description:
-      "Boutique digital studio crafting unique digital experiences. Founded 2013, Santa Monica, CA.",
+      "We build digital experiences that don't apologize for being good. Strand & Stone — founded 2013, Santa Monica.",
     url: "https://strandandstonellc.com",
   },
 };
