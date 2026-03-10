@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect } from "react";
 
 const MAGNETIC_RADIUS = 180;
 const MAGNETIC_STRENGTH = 0.22;
@@ -18,7 +18,6 @@ interface MagneticLetterProps {
 
 function MagneticLetter({ char, className, style, isAmpersand }: MagneticLetterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
   const animRef = useRef<number>(0);
   const currentOffset = useRef({ x: 0, y: 0 });
   const targetOffset = useRef({ x: 0, y: 0 });
@@ -28,7 +27,10 @@ function MagneticLetter({ char, className, style, isAmpersand }: MagneticLetterP
     const tgt = targetOffset.current;
     curr.x = lerp(curr.x, tgt.x, 0.08);
     curr.y = lerp(curr.y, tgt.y, 0.08);
-    setOffset({ x: curr.x, y: curr.y });
+    // Write directly to DOM — no setState, no re-render
+    if (ref.current) {
+      ref.current.style.transform = `translate(${curr.x.toFixed(2)}px, ${curr.y.toFixed(2)}px)`;
+    }
     animRef.current = requestAnimationFrame(animate);
   }, []);
 
@@ -77,7 +79,6 @@ function MagneticLetter({ char, className, style, isAmpersand }: MagneticLetterP
       style={{
         ...style,
         display: "inline-block",
-        transform: `translate(${offset.x}px, ${offset.y}px)`,
         willChange: "transform",
         color: isAmpersand ? "var(--accent)" : undefined,
       }}
@@ -103,7 +104,7 @@ export default function MagneticWordmark({ className }: MagneticWordmarkProps) {
   };
 
   return (
-    <div className={className} style={{ display: "flex", alignItems: "baseline", gap: "0" }}>
+    <div className={className} style={{ display: "flex", alignItems: "baseline" }}>
       {WORD1.map((ch, i) => (
         <MagneticLetter
           key={`w1-${i}`}

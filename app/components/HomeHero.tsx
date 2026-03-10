@@ -21,12 +21,12 @@ export default function HomeHero() {
       {/* Sand particle canvas — full viewport, behind everything */}
       <SandCanvas />
 
-      {/* Subtle radial glow */}
+      {/* Vignette — darkens edges, keeps center clear */}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(10,10,10,0.55) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(10,10,10,0.7) 100%)",
         }}
       />
 
