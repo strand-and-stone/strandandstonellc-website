@@ -2,38 +2,12 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { projects } from "../data/projects";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
 
-const projects = [
-  {
-    id: "01",
-    title: "Project Title",
-    category: "Digital Experience",
-    year: "2025",
-    description: "Placeholder — add project description and link.",
-    status: "live",
-  },
-  {
-    id: "02",
-    title: "Project Title",
-    category: "Web Application",
-    year: "2024",
-    description: "Placeholder — add project description and link.",
-    status: "live",
-  },
-  {
-    id: "03",
-    title: "Project Title",
-    category: "Brand Identity",
-    year: "2024",
-    description: "Placeholder — add project description and link.",
-    status: "coming soon",
-  },
-];
-
-export default function ProjectsPage() {
+export default function ProjectsContent() {
   return (
     <main className="min-h-screen px-8 py-20 max-w-4xl mx-auto">
       {/* Back nav */}
@@ -81,62 +55,74 @@ export default function ProjectsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: dur, ease, delay: 0.3 + i * 0.1 }}
-            className="group py-10 flex flex-col sm:flex-row sm:items-start gap-6"
             style={{ borderColor: "rgba(201,185,154,0.12)" }}
           >
-            {/* Index */}
-            <span
-              className="font-mono text-[10px] shrink-0 mt-1"
-              style={{ color: "var(--accent)", letterSpacing: "0.15em", minWidth: "2.5rem" }}
+            <Link
+              href={`/projects/${project.slug}`}
+              className="group py-10 flex flex-col sm:flex-row sm:items-start gap-6 block"
             >
-              {project.id}
-            </span>
-
-            {/* Content */}
-            <div className="flex-1">
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <h2
-                  className="font-display font-light leading-none text-foreground"
-                  style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", transition: "color 0.3s" }}
-                >
-                  {project.title}
-                </h2>
-                <span
-                  className="font-mono text-[9px] shrink-0 mt-2"
-                  style={{ color: "var(--muted)", letterSpacing: "0.15em", opacity: 0.6 }}
-                >
-                  {project.year}
-                </span>
-              </div>
-              <div className="flex items-center gap-4 mb-4">
-                <span
-                  className="font-mono text-[9px]"
-                  style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
-                >
-                  {project.category.toUpperCase()}
-                </span>
-                <span
-                  className="font-mono text-[9px] px-2 py-0.5 border"
-                  style={{
-                    letterSpacing: "0.15em",
-                    color: project.status === "live" ? "var(--accent)" : "var(--muted)",
-                    borderColor:
-                      project.status === "live"
-                        ? "rgba(201,185,154,0.4)"
-                        : "rgba(140,125,107,0.3)",
-                    opacity: project.status === "live" ? 1 : 0.6,
-                  }}
-                >
-                  {project.status.toUpperCase()}
-                </span>
-              </div>
-              <p
-                className="font-mono text-[0.75rem] leading-loose max-w-lg"
-                style={{ color: "var(--muted)", opacity: 0.7 }}
+              {/* Index */}
+              <span
+                className="font-mono text-[10px] shrink-0 mt-1"
+                style={{ color: "var(--accent)", letterSpacing: "0.15em", minWidth: "2.5rem" }}
               >
-                {project.description}
-              </p>
-            </div>
+                {project.id}
+              </span>
+
+              {/* Content */}
+              <div className="flex-1">
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <h2
+                    className="font-display font-light leading-none text-foreground group-hover:text-stone-accent transition-colors duration-300"
+                    style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", transition: "color 0.3s" }}
+                  >
+                    {project.title}
+                  </h2>
+                  <div className="flex items-center gap-3 shrink-0 mt-2">
+                    <span
+                      className="font-mono text-[9px]"
+                      style={{ color: "var(--muted)", letterSpacing: "0.15em", opacity: 0.6 }}
+                    >
+                      {project.year}
+                    </span>
+                    <span
+                      className="font-mono text-[9px] group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ color: "var(--accent)", opacity: 0.5, letterSpacing: "0.1em" }}
+                    >
+                      VIEW →
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 mb-4">
+                  <span
+                    className="font-mono text-[9px]"
+                    style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
+                  >
+                    {project.category.toUpperCase()}
+                  </span>
+                  <span
+                    className="font-mono text-[9px] px-2 py-0.5 border"
+                    style={{
+                      letterSpacing: "0.15em",
+                      color: project.status === "live" ? "var(--accent)" : "var(--muted)",
+                      borderColor:
+                        project.status === "live"
+                          ? "rgba(201,185,154,0.4)"
+                          : "rgba(140,125,107,0.3)",
+                      opacity: project.status === "live" ? 1 : 0.6,
+                    }}
+                  >
+                    {project.status.toUpperCase()}
+                  </span>
+                </div>
+                <p
+                  className="font-mono text-[0.75rem] leading-loose max-w-lg"
+                  style={{ color: "var(--muted)", opacity: 0.7 }}
+                >
+                  {project.description}
+                </p>
+              </div>
+            </Link>
           </motion.div>
         ))}
       </div>
