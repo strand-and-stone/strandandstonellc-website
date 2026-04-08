@@ -8,17 +8,20 @@ const dur = 0.8;
 
 const founders = [
   {
-    name: "Phil Boscarino",
+    name: "",
+    redactName: true,
     role: "Strategy",
     bio: "Connects the dots between vision and execution — ensuring every decision serves a purpose and every project leaves a mark worth making.",
   },
   {
     name: "John Meeker",
+    redactName: false,
     role: "Technology",
     bio: "Builds the systems underneath — turning ambitious ideas into reliable, performant experiences that hold up under pressure and scale with intention.",
   },
   {
     name: "Cameron Meeker",
+    redactName: false,
     role: "Creative",
     bio: "Shapes the visual language of every project — bringing a sharp eye for craft, restraint, and the kind of design that feels inevitable in hindsight.",
   },
@@ -138,7 +141,7 @@ export default function EthosPage() {
         <div className="grid gap-10">
           {founders.map((f, i) => (
             <motion.div
-              key={f.name}
+              key={`founder-${i}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: dur, ease, delay: 0.55 + i * 0.1 }}
@@ -151,7 +154,19 @@ export default function EthosPage() {
                 0{i + 1}
               </div>
               <div>
-                <p className="font-display text-xl text-foreground leading-none mb-1">{f.name}</p>
+                <p className="font-display text-xl text-foreground leading-none mb-1">
+                  {f.redactName ? (
+                    <span
+                      className="font-mono text-lg tracking-[0.35em] select-none"
+                      style={{ color: "var(--muted)", opacity: 0.85 }}
+                      aria-label="Name redacted"
+                    >
+                      ████████████
+                    </span>
+                  ) : (
+                    f.name
+                  )}
+                </p>
                 <p
                   className="font-mono text-[9px] mb-3"
                   style={{ letterSpacing: "0.2em", color: "var(--accent)" }}

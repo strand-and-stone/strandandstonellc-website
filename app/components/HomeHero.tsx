@@ -13,6 +13,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const links = [
   { href: "/projects", label: "PROJECTS" },
   { href: "/ethos", label: "ETHOS" },
+  { href: "/contact", label: "CONTACT" },
 ];
 
 export default function HomeHero() {
@@ -100,7 +101,7 @@ export default function HomeHero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9, ease, delay: 1.0 }}
-        className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-10"
+        className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-3 z-10"
       >
         <div
           className="font-mono text-[9px] text-center"
@@ -108,6 +109,13 @@ export default function HomeHero() {
         >
           SANTA MONICA, CA — FOUNDED 2013
         </div>
+        <Link
+          href="/contact"
+          className="nav-link font-mono text-[9px] pb-px"
+          style={{ letterSpacing: "0.2em", color: "var(--muted)", opacity: 0.45 }}
+        >
+          hello@strandandstonellc.com
+        </Link>
       </motion.footer>
     </main>
   );
