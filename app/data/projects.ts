@@ -77,6 +77,25 @@ export const projects: Project[] = [
     websiteUrl: "https://elfiespotfinder.com/?ref=strandandstonellc",
     founder: "Phil Boscarino",
   },
+  {
+    id: "04",
+    slug: "syncupalarm",
+    title: "SyncUpAlarm",
+    tagline: "Wake up together — even when you’re apart.",
+    category: "Lifestyle",
+    year: "2026",
+    status: "live",
+    description:
+      "Synced alarms for couples and close circles on iPhone — same beat, same morning, without the chaos. Pair once, stay in lockstep across time zones and travel.",
+    body: [
+      "Mornings are easier when you’re not negotiating who’s up first. SyncUpAlarm keeps two (or more) iPhones on the same rhythm — invite, connect, and let the alarm do the coordinating.",
+      "Set your wake time once; the app keeps alarms aligned down to the second. Optional soft ramps and haptics keep things human instead of harsh.",
+      "Built for distance, shift work, roommates, and anyone who’d rather share a routine than chase each other with texts. Schedules stay private — sync without the feed.",
+      "Widgets, shortcuts, and streaks for the people who like a little structure and a little play. Marketing site and product at syncupalarm.com.",
+    ],
+    websiteUrl: "https://syncupalarm.com/?ref=strandandstonellc",
+    founder: "Strand & Stone LLC",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {

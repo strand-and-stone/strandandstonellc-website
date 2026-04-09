@@ -12,6 +12,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 const links = [
   { href: "/projects", label: "PROJECTS" },
+  { href: "/services", label: "SERVICES" },
   { href: "/ethos", label: "ETHOS" },
   { href: "/contact", label: "CONTACT" },
 ];
@@ -81,7 +82,7 @@ export default function HomeHero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease, delay: 0.7 }}
-          className="flex gap-12 items-center mt-4"
+          className="flex flex-wrap justify-center gap-x-10 gap-y-4 sm:gap-12 items-center mt-4 max-w-lg"
         >
           {links.map(({ href, label }) => (
             <Link

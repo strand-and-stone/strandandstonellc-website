@@ -226,13 +226,22 @@ export default function EthosPage() {
         >
           HOME
         </Link>
-        <Link
-          href="/projects"
-          className="nav-link font-mono text-[10px] pb-1"
-          style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
-        >
-          PROJECTS →
-        </Link>
+        <div className="flex flex-wrap gap-x-8 gap-y-2 justify-end">
+          <Link
+            href="/services"
+            className="nav-link font-mono text-[10px] pb-1"
+            style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
+          >
+            SERVICES →
+          </Link>
+          <Link
+            href="/projects"
+            className="nav-link font-mono text-[10px] pb-1"
+            style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
+          >
+            PROJECTS →
+          </Link>
+        </div>
       </motion.div>
     </main>
   );

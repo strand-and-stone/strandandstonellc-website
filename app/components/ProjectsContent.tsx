@@ -142,13 +142,22 @@ export default function ProjectsContent() {
         >
           HOME
         </Link>
-        <Link
-          href="/ethos"
-          className="nav-link font-mono text-[10px] pb-1"
-          style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
-        >
-          ETHOS →
-        </Link>
+        <div className="flex flex-wrap gap-x-8 gap-y-2 justify-end">
+          <Link
+            href="/services"
+            className="nav-link font-mono text-[10px] pb-1"
+            style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
+          >
+            SERVICES →
+          </Link>
+          <Link
+            href="/ethos"
+            className="nav-link font-mono text-[10px] pb-1"
+            style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
+          >
+            ETHOS →
+          </Link>
+        </div>
       </motion.div>
     </main>
   );

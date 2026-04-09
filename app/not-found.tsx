@@ -73,7 +73,7 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease, delay: 0.5 }}
-          className="flex gap-10 items-center mt-2"
+          className="flex flex-wrap justify-center gap-x-8 gap-y-3 items-center mt-2 max-w-md"
         >
           <Link
             href="/"
@@ -88,6 +88,13 @@ export default function NotFound() {
             style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
           >
             PROJECTS
+          </Link>
+          <Link
+            href="/services"
+            className="nav-link font-mono text-[11px] pb-1"
+            style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
+          >
+            SERVICES
           </Link>
           <Link
             href="/ethos"
