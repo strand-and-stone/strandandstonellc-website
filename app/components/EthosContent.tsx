@@ -7,12 +7,14 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
 
 const founders = [
+  /* Phil — redacted listing; restore when ready
   {
     name: "",
     redactName: true,
     role: "Chief Strategy",
     bio: "Connects the dots between vision and execution — ensuring every decision serves a purpose and every project leaves a mark worth making.",
   },
+  */
   {
     name: "John Meeker",
     redactName: false,
