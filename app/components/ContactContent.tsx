@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
@@ -11,27 +11,52 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 export default function ContactContent() {
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const startedAtRef = useRef<number>(0);
+
+  useEffect(() => {
+    startedAtRef.current = Date.now();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMessage(null);
     setStatus("sending");
 
-    const data = new FormData(e.currentTarget);
-    const name = data.get("name") as string;
-    const email = data.get("email") as string;
-    const message = data.get("message") as string;
+    const form = e.currentTarget;
+    const fd = new FormData(form);
 
-    // mailto fallback — opens default mail client with pre-filled fields
-    const subject = encodeURIComponent(`Message from ${name} — strandandstonellc.com`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:hello@strandandstonellc.com?subject=${subject}&body=${body}`;
+    const payload = {
+      name: fd.get("name"),
+      email: fd.get("email"),
+      message: fd.get("message"),
+      company: fd.get("company"),
+      _startedAt: startedAtRef.current,
+    };
 
-    // Show sent state briefly
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+
+      if (!res.ok) {
+        setErrorMessage(data.error ?? "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
+
       setStatus("sent");
-      formRef.current?.reset();
-    }, 400);
+      form.reset();
+      startedAtRef.current = Date.now();
+    } catch {
+      setErrorMessage("Network error. Please try again.");
+      setStatus("error");
+    }
   }
 
   return (
@@ -119,7 +144,14 @@ export default function ContactContent() {
           >
             WE&apos;LL BE IN TOUCH
           </span>
+          <p
+            className="font-mono text-[0.7rem] max-w-xs leading-relaxed"
+            style={{ color: "var(--muted)", opacity: 0.65 }}
+          >
+            You should get a short confirmation email in a minute or two — check spam if you don&apos;t see it.
+          </p>
           <button
+            type="button"
             onClick={() => setStatus("idle")}
             className="mt-8 nav-link font-mono text-[10px] pb-1"
             style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
@@ -134,23 +166,55 @@ export default function ContactContent() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: dur, ease, delay: 0.3 }}
-          className="space-y-10"
+          className="space-y-10 relative"
         >
+          {/* Honeypot — bots fill this; humans never see it */}
+          <div
+            className="absolute w-px h-px overflow-hidden opacity-0 pointer-events-none"
+            aria-hidden="true"
+          >
+            <label htmlFor="contact-company">Company</label>
+            <input
+              id="contact-company"
+              name="company"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
+          {errorMessage && (
+            <p
+              className="font-mono text-[0.75rem] py-3 px-4 border"
+              style={{
+                borderColor: "rgba(201,185,154,0.35)",
+                color: "var(--accent)",
+                letterSpacing: "0.02em",
+              }}
+              role="alert"
+            >
+              {errorMessage}
+            </p>
+          )}
+
           {/* Name + Email row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="flex flex-col gap-3">
               <label
+                htmlFor="contact-name"
                 className="font-mono text-[9px]"
                 style={{ letterSpacing: "0.25em", color: "var(--accent)" }}
               >
                 NAME
               </label>
               <input
+                id="contact-name"
                 name="name"
                 type="text"
                 required
                 autoComplete="name"
                 placeholder="Your name"
+                maxLength={120}
                 className="bg-transparent border-b font-mono text-[0.8rem] py-2 outline-none transition-colors duration-300 placeholder:opacity-30"
                 style={{
                   borderColor: "rgba(201,185,154,0.2)",
@@ -162,17 +226,20 @@ export default function ContactContent() {
             </div>
             <div className="flex flex-col gap-3">
               <label
+                htmlFor="contact-email"
                 className="font-mono text-[9px]"
                 style={{ letterSpacing: "0.25em", color: "var(--accent)" }}
               >
                 EMAIL
               </label>
               <input
+                id="contact-email"
                 name="email"
                 type="email"
                 required
                 autoComplete="email"
                 placeholder="your@email.com"
+                maxLength={254}
                 className="bg-transparent border-b font-mono text-[0.8rem] py-2 outline-none transition-colors duration-300 placeholder:opacity-30"
                 style={{
                   borderColor: "rgba(201,185,154,0.2)",
@@ -187,15 +254,18 @@ export default function ContactContent() {
           {/* Message */}
           <div className="flex flex-col gap-3">
             <label
+              htmlFor="contact-message"
               className="font-mono text-[9px]"
               style={{ letterSpacing: "0.25em", color: "var(--accent)" }}
             >
               MESSAGE
             </label>
             <textarea
+              id="contact-message"
               name="message"
               required
               rows={6}
+              maxLength={5000}
               placeholder="What's on your mind?"
               className="bg-transparent border-b font-mono text-[0.8rem] py-2 outline-none resize-none transition-colors duration-300 placeholder:opacity-30"
               style={{
@@ -208,17 +278,17 @@ export default function ContactContent() {
           </div>
 
           {/* Submit */}
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4">
             <span
-              className="font-mono text-[9px]"
+              className="font-mono text-[9px] order-2 sm:order-1"
               style={{ color: "var(--muted)", opacity: 0.5, letterSpacing: "0.15em" }}
             >
-              hello@strandandstonellc.com
+              Secured delivery · hello@strandandstonellc.com
             </span>
             <button
               type="submit"
               disabled={status === "sending"}
-              className="font-mono text-[10px] px-6 py-3 border transition-all duration-300 disabled:opacity-50"
+              className="font-mono text-[10px] px-6 py-3 border transition-all duration-300 disabled:opacity-50 order-1 sm:order-2 self-start sm:self-auto"
               style={{
                 letterSpacing: "0.2em",
                 color: "var(--background)",

@@ -10,19 +10,19 @@ const founders = [
   {
     name: "",
     redactName: true,
-    role: "Strategy",
+    role: "Chief Strategy",
     bio: "Connects the dots between vision and execution — ensuring every decision serves a purpose and every project leaves a mark worth making.",
   },
   {
     name: "John Meeker",
     redactName: false,
-    role: "Technology",
+    role: "Chief Technology",
     bio: "Builds the systems underneath — turning ambitious ideas into reliable, performant experiences that hold up under pressure and scale with intention.",
   },
   {
     name: "Cameron Meeker",
     redactName: false,
-    role: "Creative",
+    role: "Chief Creative",
     bio: "Shapes the visual language of every project — bringing a sharp eye for craft, restraint, and the kind of design that feels inevitable in hindsight.",
   },
 ];
@@ -157,11 +157,38 @@ export default function EthosPage() {
                 <p className="font-display text-xl text-foreground leading-none mb-1">
                   {f.redactName ? (
                     <span
-                      className="font-mono text-lg tracking-[0.35em] select-none"
-                      style={{ color: "var(--muted)", opacity: 0.85 }}
-                      aria-label="Name redacted"
+                      className="relative inline-block group cursor-help align-baseline rounded-sm outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
+                      tabIndex={0}
+                      aria-label="Founding member — name withheld on purpose"
+                      title="They’re under an NDA with the concept of ‘personal brand.’ We’re not allowed to say who — only that they’re very strategic about it."
                     >
-                      ████████████
+                      <span
+                        className="font-mono text-[0.95rem] sm:text-lg tracking-[0.12em] select-none inline-flex items-center gap-2 flex-wrap"
+                        style={{ color: "var(--accent)" }}
+                      >
+                        <span className="opacity-50" aria-hidden="true">
+                          ░▒▓
+                        </span>
+                        <span className="italic font-display font-light tracking-normal opacity-90">
+                          Classified Strategist
+                        </span>
+                        <span className="opacity-50" aria-hidden="true">
+                          ▓▒░
+                        </span>
+                      </span>
+                      <span
+                        className="pointer-events-none absolute z-20 left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-[calc(100%+12px)] w-max max-w-[min(300px,88vw)] px-4 py-3 font-mono text-[10px] leading-relaxed text-left opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0"
+                        style={{
+                          background: "#111110",
+                          border: "1px solid rgba(201,185,154,0.35)",
+                          color: "var(--foreground)",
+                          letterSpacing: "0.04em",
+                          boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
+                        }}
+                        role="tooltip"
+                      >
+                        Official reason: witness protection from a rogue PowerPoint template that escaped in 2014. Unofficial reason: they told Legal &ldquo;just redact me, it&apos;ll look cool&rdquo; — and honestly? Fair.
+                      </span>
                     </span>
                   ) : (
                     f.name

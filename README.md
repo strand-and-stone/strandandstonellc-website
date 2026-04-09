@@ -8,6 +8,7 @@ Marketing site for [Strand & Stone LLC](https://strandandstonellc.com). Next.js 
 - **Motion:** Framer Motion
 - **Fonts:** Cormorant Garamond (display), DM Mono (body) via `next/font`
 - **Analytics:** Google Analytics 4 (gtag)
+- **Contact form:** [Resend](https://resend.com) — notifies `hello@…` and sends the visitor an auto-reply (`/api/contact`)
 - **Host:** Vercel
 
 ## Repo
@@ -25,11 +26,19 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment variables
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | GA4 measurement ID (e.g. `G-RMZGVPXJ69`). Optional; falls back to hardcoded ID. |
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `RESEND_API_KEY` | **Yes** (contact form) | API key from [Resend](https://resend.com). Without it, the form returns 503 (dev shows a hint to add `.env.local`). |
+| `CONTACT_FROM_EMAIL` | Recommended | Verified sender, e.g. `Strand & Stone <hello@strandandstonellc.com>`. Until your domain is verified in Resend, use `Strand & Stone <onboarding@resend.dev>` (sending may be limited to your own inbox on the free tier). |
+| `CONTACT_TO_EMAIL` | Optional | Inbox for form submissions. Default: `hello@strandandstonellc.com`. |
+| `NEXT_PUBLIC_SITE_URL` | Optional | Production site URL (no trailing slash) for stricter `Origin` checks on the contact API. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | GA4 measurement ID; falls back to hardcoded ID if unset. |
 
-Set in Vercel under **Settings → Environment Variables** for production.
+**Resend setup:** Add and verify **strandandstonellc.com** in Resend, then create an API key and set `CONTACT_FROM_EMAIL` to an address on that domain.
+
+**What each submit does:** (1) Email to `CONTACT_TO_EMAIL` (default `hello@strandandstonellc.com`) with name, email, and message — **Reply-To** is the visitor. (2) Auto-reply to the visitor confirming receipt — **Reply-To** is `hello@…` so they can follow up. If the auto-reply fails, the team email still went out (check server logs).
+
+Set variables in Vercel under **Settings → Environment Variables** for Production (and Preview if you want forms on preview URLs).
 
 ## Deploy
 
