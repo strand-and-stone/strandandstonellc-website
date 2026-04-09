@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import type { Project } from "../data/projects";
+import { formatProjectStatus, isLiveProjectStatus } from "../data/projects";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
@@ -44,14 +45,13 @@ export default function ProjectDetail({ project }: { project: Project }) {
             className="font-mono text-[9px] px-2 py-0.5 border"
             style={{
               letterSpacing: "0.15em",
-              color: project.status === "live" ? "var(--accent)" : "var(--muted)",
-              borderColor:
-                project.status === "live"
-                  ? "rgba(201,185,154,0.4)"
-                  : "rgba(140,125,107,0.3)",
+              color: isLiveProjectStatus(project.status) ? "var(--accent)" : "var(--muted)",
+              borderColor: isLiveProjectStatus(project.status)
+                ? "rgba(201,185,154,0.4)"
+                : "rgba(140,125,107,0.3)",
             }}
           >
-            {project.status.toUpperCase()}
+            {formatProjectStatus(project.status)}
           </span>
           <span
             className="font-mono text-[9px] ml-auto"

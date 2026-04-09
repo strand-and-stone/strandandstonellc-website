@@ -1,3 +1,14 @@
+export type ProjectStatus = "live" | "coming soon" | "under development";
+
+export function formatProjectStatus(status: ProjectStatus): string {
+  if (status === "under development") return "UNDER DEVELOPMENT";
+  return status.toUpperCase();
+}
+
+export function isLiveProjectStatus(status: ProjectStatus): boolean {
+  return status === "live";
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -5,7 +16,7 @@ export interface Project {
   tagline: string;
   category: string;
   year: string;
-  status: "live" | "coming soon";
+  status: ProjectStatus;
   description: string;
   body: string[];
   appStoreUrl?: string;
@@ -84,14 +95,14 @@ export const projects: Project[] = [
     tagline: "Wake up together — even when you’re apart.",
     category: "Lifestyle",
     year: "2026",
-    status: "live",
+    status: "under development",
     description:
-      "Synced alarms for couples and close circles on iPhone — same beat, same morning, without the chaos. Pair once, stay in lockstep across time zones and travel.",
+      "Synced alarms for couples and close circles on iPhone — currently in active development. A teaser lives at syncupalarm.com; the full experience is on the way.",
     body: [
-      "Mornings are easier when you’re not negotiating who’s up first. SyncUpAlarm keeps two (or more) iPhones on the same rhythm — invite, connect, and let the alarm do the coordinating.",
-      "Set your wake time once; the app keeps alarms aligned down to the second. Optional soft ramps and haptics keep things human instead of harsh.",
+      "SyncUpAlarm is under development: we’re building a calm way for two people to share the same morning rhythm — invite, connect, and wake in lockstep without the chaos.",
+      "The marketing site is live as a preview; core sync, pairing, and polish are still in progress. Optional soft ramps, haptics, and widgets are part of the roadmap.",
       "Built for distance, shift work, roommates, and anyone who’d rather share a routine than chase each other with texts. Schedules stay private — sync without the feed.",
-      "Widgets, shortcuts, and streaks for the people who like a little structure and a little play. Marketing site and product at syncupalarm.com.",
+      "Follow along at syncupalarm.com; we’ll ship when it feels right, not when the calendar says so.",
     ],
     websiteUrl: "https://syncupalarm.com/?ref=strandandstonellc",
     founder: "Strand & Stone LLC",

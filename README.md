@@ -28,7 +28,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `RESEND_API_KEY` | **Yes** (contact form) | API key from [Resend](https://resend.com). Without it, the form returns 503 (dev shows a hint to add `.env.local`). |
+| `RESEND_API_KEY` | **Yes** (contact form) | API key from [Resend](https://resend.com). Without it, the form returns 503 (dev shows a hint to add `.env.local`). Aliases **`RESEND_TOKEN`** and **`RESEND_KEY`** are also read if `RESEND_API_KEY` is unset. |
 | `CONTACT_FROM_EMAIL` | Recommended | Verified sender, e.g. `Strand & Stone <hello@strandandstonellc.com>`. Until your domain is verified in Resend, use `Strand & Stone <onboarding@resend.dev>` (sending may be limited to your own inbox on the free tier). |
 | `CONTACT_TO_EMAIL` | Optional | Inbox for form submissions. Default: `hello@strandandstonellc.com`. |
 | `NEXT_PUBLIC_SITE_URL` | Optional | Production site URL (no trailing slash) for stricter `Origin` checks on the contact API. |

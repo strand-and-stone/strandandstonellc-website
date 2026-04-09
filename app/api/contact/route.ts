@@ -2,11 +2,21 @@ import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const MAX_NAME = 120;
 const MAX_MESSAGE = 5000;
 const MIN_MESSAGE = 10;
 const MIN_FORM_MS = 2500;
+
+const NO_STORE = { "Cache-Control": "no-store, max-age=0" } as const;
+
+function json(data: unknown, init?: { status?: number }) {
+  return NextResponse.json(data, {
+    status: init?.status,
+    headers: NO_STORE,
+  });
+}
 
 function escapeHtml(s: string) {
   return s
@@ -21,48 +31,71 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function isLocalDevOrigin(origin: string): boolean {
+function normalizeHost(raw: string | undefined): string | null {
+  if (!raw) return null;
+  const h = raw.trim().replace(/^https?:\/\//i, "").split("/")[0]?.toLowerCase();
+  return h || null;
+}
+
+function isLocalDevHost(hostname: string): boolean {
+  return (
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "::1" ||
+    hostname === "[::1]"
+  );
+}
+
+function allowedHostsForRequest(): Set<string> {
+  const hosts = new Set<string>(["strandandstonellc.com", "www.strandandstonellc.com"]);
+  const fromEnv = [
+    process.env.VERCEL_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_BRANCH_URL,
+    process.env.NEXT_PUBLIC_SITE_URL,
+  ];
+  for (const raw of fromEnv) {
+    const h = normalizeHost(raw);
+    if (h) hosts.add(h);
+  }
+  return hosts;
+}
+
+function originHostnameAllowed(origin: string): boolean {
   try {
-    const u = new URL(origin);
-    return (
-      u.hostname === "localhost" ||
-      u.hostname === "127.0.0.1" ||
-      u.hostname === "::1" ||
-      u.hostname === "[::1]"
-    );
+    const hostname = new URL(origin).hostname.toLowerCase();
+    if (isLocalDevHost(hostname)) return true;
+    return allowedHostsForRequest().has(hostname);
   } catch {
     return false;
   }
 }
 
-function addHttpsHost(allowed: Set<string>, host: string | undefined) {
-  const h = host?.trim().replace(/^https?:\/\//, "").replace(/\/$/, "");
-  if (!h) return;
-  allowed.add(`https://${h}`);
+/** Same-origin browser requests include Sec-Fetch-Site: same-origin (CSRF-safe signal). */
+function isSameOriginBrowserRequest(req: NextRequest): boolean {
+  return req.headers.get("sec-fetch-site") === "same-origin";
 }
 
-function allowedOrigin(origin: string | null): boolean {
-  if (!origin || origin === "null") return true;
-  if (isLocalDevOrigin(origin)) return true;
+function isContactPostAllowed(req: NextRequest): boolean {
+  if (isSameOriginBrowserRequest(req)) return true;
 
-  const allowed = new Set([
-    "https://strandandstonellc.com",
-    "https://www.strandandstonellc.com",
-  ]);
-  if (process.env.VERCEL_URL) {
-    addHttpsHost(allowed, process.env.VERCEL_URL);
+  const origin = req.headers.get("origin");
+  if (!origin || origin === "null") return true;
+
+  return originHostnameAllowed(origin);
+}
+
+function getResendApiKey(): string | undefined {
+  const candidates = [
+    process.env.RESEND_API_KEY,
+    process.env.RESEND_TOKEN,
+    process.env.RESEND_KEY,
+  ];
+  for (const c of candidates) {
+    const t = c?.trim();
+    if (t) return t;
   }
-  // Production canonical URL on Vercel (no protocol in env)
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    addHttpsHost(allowed, process.env.VERCEL_PROJECT_PRODUCTION_URL);
-  }
-  if (process.env.VERCEL_BRANCH_URL) {
-    addHttpsHost(allowed, process.env.VERCEL_BRANCH_URL);
-  }
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    allowed.add(process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, ""));
-  }
-  return allowed.has(origin);
+  return undefined;
 }
 
 function serviceUnavailableMessage(): string {
@@ -73,33 +106,33 @@ function serviceUnavailableMessage(): string {
 }
 
 export async function POST(req: NextRequest) {
-  if (!allowedOrigin(req.headers.get("origin"))) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!isContactPostAllowed(req)) {
+    return json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const apiKey = getResendApiKey();
   if (!apiKey) {
     console.error(
-      "[contact] RESEND_API_KEY is missing or empty — set it in Vercel → Settings → Environment Variables for Production (redeploy after saving)."
+      "[contact] No Resend API key found. Set RESEND_API_KEY in Vercel → Environment Variables for Production, then redeploy. (Aliases RESEND_TOKEN / RESEND_KEY are also supported.)"
     );
-    return NextResponse.json({ error: serviceUnavailableMessage() }, { status: 503 });
+    return json({ error: serviceUnavailableMessage() }, { status: 503 });
   }
 
   let body: Record<string, unknown>;
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    return json({ error: "Invalid payload" }, { status: 400 });
   }
 
   const company = typeof body.company === "string" ? body.company.trim() : "";
   if (company.length > 0) {
-    return NextResponse.json({ ok: true });
+    return json({ ok: true });
   }
 
   const startedAt = Number(body._startedAt);
   if (!Number.isFinite(startedAt) || Date.now() - startedAt < MIN_FORM_MS) {
-    return NextResponse.json({ error: "Please take a moment before sending." }, { status: 429 });
+    return json({ error: "Please take a moment before sending." }, { status: 429 });
   }
 
   const name = typeof body.name === "string" ? body.name.trim().slice(0, MAX_NAME) : "";
@@ -107,7 +140,7 @@ export async function POST(req: NextRequest) {
   const message = typeof body.message === "string" ? body.message.trim().slice(0, MAX_MESSAGE) : "";
 
   if (!name || !isValidEmail(email) || message.length < MIN_MESSAGE) {
-    return NextResponse.json({ error: "Please check your name, email, and message." }, { status: 400 });
+    return json({ error: "Please check your name, email, and message." }, { status: 400 });
   }
 
   const inbox = process.env.CONTACT_TO_EMAIL ?? "hello@strandandstonellc.com";
@@ -117,7 +150,6 @@ export async function POST(req: NextRequest) {
 
   const resend = new Resend(apiKey);
 
-  // 1) Notify team at hello@ — full context, Reply-To = visitor
   const teamMail = await resend.emails.send({
     from,
     to: [inbox],
@@ -143,7 +175,7 @@ export async function POST(req: NextRequest) {
 
   if (teamMail.error) {
     console.error("[contact] team notify failed", JSON.stringify(teamMail.error));
-    return NextResponse.json(
+    return json(
       {
         error:
           "Could not deliver your message. Try again or email hello@strandandstonellc.com directly.",
@@ -152,7 +184,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 2) Auto-reply to visitor — subtle confirmation (non-fatal if this fails)
   const first = name.split(/\s+/)[0] ?? name;
   const autoReplyText = [
     `Hi ${first},`,
@@ -185,5 +216,5 @@ export async function POST(req: NextRequest) {
     console.error("[contact] auto-reply failed (team email was sent)", visitorMail.error);
   }
 
-  return NextResponse.json({ ok: true });
+  return json({ ok: true });
 }
