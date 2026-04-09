@@ -38,7 +38,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 **What each submit does:** (1) Email to `CONTACT_TO_EMAIL` (default `hello@strandandstonellc.com`) with name, email, and message — **Reply-To** is the visitor. (2) Auto-reply to the visitor confirming receipt — **Reply-To** is `hello@…` so they can follow up. If the auto-reply fails, the team email still went out (check server logs).
 
-Set variables in Vercel under **Settings → Environment Variables** for Production (and Preview if you want forms on preview URLs).
+Set variables in Vercel under **Settings → Environment Variables**. For the live site, add `RESEND_API_KEY` (and recommended `CONTACT_FROM_EMAIL`) with **Environment** = **Production** (not only Preview/Development), then **Redeploy** so the new values load. If `RESEND_API_KEY` is missing in Production, the contact form shows a generic “try again” message and the function logs a `[contact] RESEND_API_KEY is missing…` line in Vercel → Logs.
 
 ## Deploy
 

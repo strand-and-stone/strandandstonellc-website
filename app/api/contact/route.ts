@@ -35,6 +35,12 @@ function isLocalDevOrigin(origin: string): boolean {
   }
 }
 
+function addHttpsHost(allowed: Set<string>, host: string | undefined) {
+  const h = host?.trim().replace(/^https?:\/\//, "").replace(/\/$/, "");
+  if (!h) return;
+  allowed.add(`https://${h}`);
+}
+
 function allowedOrigin(origin: string | null): boolean {
   if (!origin || origin === "null") return true;
   if (isLocalDevOrigin(origin)) return true;
@@ -44,7 +50,14 @@ function allowedOrigin(origin: string | null): boolean {
     "https://www.strandandstonellc.com",
   ]);
   if (process.env.VERCEL_URL) {
-    allowed.add(`https://${process.env.VERCEL_URL}`);
+    addHttpsHost(allowed, process.env.VERCEL_URL);
+  }
+  // Production canonical URL on Vercel (no protocol in env)
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    addHttpsHost(allowed, process.env.VERCEL_PROJECT_PRODUCTION_URL);
+  }
+  if (process.env.VERCEL_BRANCH_URL) {
+    addHttpsHost(allowed, process.env.VERCEL_BRANCH_URL);
   }
   if (process.env.NEXT_PUBLIC_SITE_URL) {
     allowed.add(process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, ""));
@@ -64,8 +77,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
+    console.error(
+      "[contact] RESEND_API_KEY is missing or empty — set it in Vercel → Settings → Environment Variables for Production (redeploy after saving)."
+    );
     return NextResponse.json({ error: serviceUnavailableMessage() }, { status: 503 });
   }
 
@@ -126,9 +142,12 @@ export async function POST(req: NextRequest) {
   });
 
   if (teamMail.error) {
-    console.error("[contact] team notify failed", teamMail.error);
+    console.error("[contact] team notify failed", JSON.stringify(teamMail.error));
     return NextResponse.json(
-      { error: "Could not deliver your message. Try again or email hello@strandandstonellc.com directly." },
+      {
+        error:
+          "Could not deliver your message. Try again or email hello@strandandstonellc.com directly.",
+      },
       { status: 502 }
     );
   }
