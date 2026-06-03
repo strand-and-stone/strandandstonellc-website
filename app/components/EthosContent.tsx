@@ -27,6 +27,12 @@ const founders = [
     role: "Chief Creative",
     bio: "Shapes the visual language of every project — bringing a sharp eye for craft, restraint, and the kind of design that feels inevitable in hindsight.",
   },
+  {
+    name: "Robert Boscarino",
+    redactName: false,
+    role: "Director, Strategic Partnerships",
+    bio: "An entrepreneur with a finance background — identifying alignment across organizations and structuring partnerships built for long-term mutual value.",
+  },
 ];
 
 export default function EthosPage() {
