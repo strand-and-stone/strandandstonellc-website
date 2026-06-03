@@ -2,11 +2,19 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import TeamMemberMark from "./TeamMemberMark";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
 
-const founders = [
+type Member = {
+  name: string;
+  redactName: boolean;
+  role: string;
+  bio: string;
+};
+
+const founders: Member[] = [
   /* Phil — redacted listing; restore when ready
   {
     name: "",
@@ -27,6 +35,9 @@ const founders = [
     role: "Chief Creative",
     bio: "Shapes the visual language of every project — bringing a sharp eye for craft, restraint, and the kind of design that feels inevitable in hindsight.",
   },
+];
+
+const team: Member[] = [
   {
     name: "Robert Boscarino",
     redactName: false,
@@ -34,6 +45,130 @@ const founders = [
     bio: "An entrepreneur with a finance background — identifying alignment across organizations and structuring partnerships built for long-term mutual value.",
   },
 ];
+
+function MemberCard({
+  member,
+  index,
+  delay,
+  marker = "index",
+}: {
+  member: Member;
+  index: number;
+  delay: number;
+  marker?: "index" | "icon";
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: dur, ease, delay }}
+      className="flex gap-8 items-start"
+    >
+      <div className="shrink-0" style={{ minWidth: "2rem" }}>
+        {marker === "index" ? (
+          <div
+            className="font-mono text-[10px] pt-1"
+            style={{ color: "var(--accent)", letterSpacing: "0.15em" }}
+          >
+            0{index + 1}
+          </div>
+        ) : (
+          <TeamMemberMark />
+        )}
+      </div>
+      <div>
+        <p className="font-display text-xl text-foreground leading-none mb-1">
+          {member.redactName ? (
+            <span
+              className="relative inline-block group cursor-help align-baseline rounded-sm outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
+              tabIndex={0}
+              aria-label="Founding member — name withheld on purpose"
+              title="They’re under an NDA with the concept of ‘personal brand.’ We’re not allowed to say who — only that they’re very strategic about it."
+            >
+              <span
+                className="font-mono text-[0.95rem] sm:text-lg tracking-[0.12em] select-none inline-flex items-center gap-2 flex-wrap"
+                style={{ color: "var(--accent)" }}
+              >
+                <span className="opacity-50" aria-hidden="true">
+                  ░▒▓
+                </span>
+                <span className="italic font-display font-light tracking-normal opacity-90">
+                  Classified Strategist
+                </span>
+                <span className="opacity-50" aria-hidden="true">
+                  ▓▒░
+                </span>
+              </span>
+              <span
+                className="pointer-events-none absolute z-20 left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-[calc(100%+12px)] w-max max-w-[min(300px,88vw)] px-4 py-3 font-mono text-[10px] leading-relaxed text-left opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0"
+                style={{
+                  background: "#111110",
+                  border: "1px solid rgba(201,185,154,0.35)",
+                  color: "var(--foreground)",
+                  letterSpacing: "0.04em",
+                  boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
+                }}
+                role="tooltip"
+              >
+                Official reason: witness protection from a rogue PowerPoint template that escaped in 2014. Unofficial reason: they told Legal &ldquo;just redact me, it&apos;ll look cool&rdquo; — and honestly? Fair.
+              </span>
+            </span>
+          ) : (
+            member.name
+          )}
+        </p>
+        <p
+          className="font-mono text-[9px] mb-3"
+          style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
+        >
+          {member.role.toUpperCase()}
+        </p>
+        <p className="font-mono text-[0.75rem] leading-loose" style={{ color: "var(--muted)", opacity: 0.7 }}>
+          {member.bio}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+function PeopleSection({
+  title,
+  members,
+  baseDelay,
+  marker = "index",
+}: {
+  title: string;
+  members: Member[];
+  baseDelay: number;
+  marker?: "index" | "icon";
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: dur, ease, delay: baseDelay }}
+      className="mb-20"
+    >
+      <span
+        className="font-mono text-[10px] block mb-10"
+        style={{ letterSpacing: "0.3em", color: "var(--accent)" }}
+      >
+        {title}
+      </span>
+      <div className="grid gap-10">
+        {members.map((member, i) => (
+          <MemberCard
+            key={`${title}-${i}`}
+            member={member}
+            index={i}
+            delay={baseDelay + 0.05 + i * 0.1}
+            marker={marker}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function EthosPage() {
   return (
@@ -134,88 +269,10 @@ export default function EthosPage() {
       </motion.div>
 
       {/* Founders */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: dur, ease, delay: 0.5 }}
-        className="mb-20"
-      >
-        <span
-          className="font-mono text-[10px] block mb-10"
-          style={{ letterSpacing: "0.3em", color: "var(--accent)" }}
-        >
-          FOUNDING MEMBERS
-        </span>
-        <div className="grid gap-10">
-          {founders.map((f, i) => (
-            <motion.div
-              key={`founder-${i}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: dur, ease, delay: 0.55 + i * 0.1 }}
-              className="flex gap-8 items-start"
-            >
-              <div
-                className="font-mono text-[10px] pt-1 shrink-0"
-                style={{ color: "var(--accent)", letterSpacing: "0.15em", minWidth: "2rem" }}
-              >
-                0{i + 1}
-              </div>
-              <div>
-                <p className="font-display text-xl text-foreground leading-none mb-1">
-                  {f.redactName ? (
-                    <span
-                      className="relative inline-block group cursor-help align-baseline rounded-sm outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]"
-                      tabIndex={0}
-                      aria-label="Founding member — name withheld on purpose"
-                      title="They’re under an NDA with the concept of ‘personal brand.’ We’re not allowed to say who — only that they’re very strategic about it."
-                    >
-                      <span
-                        className="font-mono text-[0.95rem] sm:text-lg tracking-[0.12em] select-none inline-flex items-center gap-2 flex-wrap"
-                        style={{ color: "var(--accent)" }}
-                      >
-                        <span className="opacity-50" aria-hidden="true">
-                          ░▒▓
-                        </span>
-                        <span className="italic font-display font-light tracking-normal opacity-90">
-                          Classified Strategist
-                        </span>
-                        <span className="opacity-50" aria-hidden="true">
-                          ▓▒░
-                        </span>
-                      </span>
-                      <span
-                        className="pointer-events-none absolute z-20 left-0 sm:left-1/2 sm:-translate-x-1/2 bottom-[calc(100%+12px)] w-max max-w-[min(300px,88vw)] px-4 py-3 font-mono text-[10px] leading-relaxed text-left opacity-0 invisible transition-all duration-200 group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible translate-y-1 group-hover:translate-y-0 group-focus-within:translate-y-0"
-                        style={{
-                          background: "#111110",
-                          border: "1px solid rgba(201,185,154,0.35)",
-                          color: "var(--foreground)",
-                          letterSpacing: "0.04em",
-                          boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
-                        }}
-                        role="tooltip"
-                      >
-                        Official reason: witness protection from a rogue PowerPoint template that escaped in 2014. Unofficial reason: they told Legal &ldquo;just redact me, it&apos;ll look cool&rdquo; — and honestly? Fair.
-                      </span>
-                    </span>
-                  ) : (
-                    f.name
-                  )}
-                </p>
-                <p
-                  className="font-mono text-[9px] mb-3"
-                  style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
-                >
-                  {f.role.toUpperCase()}
-                </p>
-                <p className="font-mono text-[0.75rem] leading-loose" style={{ color: "var(--muted)", opacity: 0.7 }}>
-                  {f.bio}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+      <PeopleSection title="FOUNDING MEMBERS" members={founders} baseDelay={0.5} />
+
+      {/* Team */}
+      <PeopleSection title="TEAM" members={team} baseDelay={0.75} marker="icon" />
 
       {/* Footer nav */}
       <motion.div
