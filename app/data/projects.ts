@@ -107,6 +107,32 @@ export const projects: Project[] = [
     websiteUrl: "https://syncupalarm.com/?ref=strandandstonellc",
     founder: "Strand & Stone LLC",
   },
+  {
+    id: "05",
+    slug: "tunnel-report",
+    title: "Tunnel Report",
+    tagline: "Cited VPN reviews and comparisons.",
+    category: "Privacy",
+    year: "2026",
+    status: "live",
+    description: "Cited VPN reviews and comparisons. Live at tunnelreport.com.",
+    body: ["Cited VPN reviews and comparisons. Live at tunnelreport.com."],
+    websiteUrl: "https://tunnelreport.com",
+    founder: "Strand & Stone LLC",
+  },
+  {
+    id: "06",
+    slug: "processor-report",
+    title: "Processor Report",
+    tagline: "Cited merchant-account reviews and comparisons.",
+    category: "Payments",
+    year: "2026",
+    status: "live",
+    description: "Cited merchant-account reviews and comparisons. Live at processorreport.com.",
+    body: ["Cited merchant-account reviews and comparisons. Live at processorreport.com."],
+    websiteUrl: "https://www.processorreport.com",
+    founder: "Strand & Stone LLC",
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
