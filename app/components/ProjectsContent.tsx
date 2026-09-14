@@ -2,10 +2,81 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { projects, formatProjectStatus, isLiveProjectStatus } from "../data/projects";
+import {
+  projects,
+  formatProjectStatus,
+  isLiveProjectStatus,
+  type Project,
+} from "../data/projects";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
+const rowClassName = "group py-10 flex flex-col sm:flex-row sm:items-start gap-6 block";
+
+function ProjectRowContent({ project }: { project: Project }) {
+  return (
+    <>
+      <span
+        className="font-mono text-[10px] shrink-0 mt-1"
+        style={{ color: "var(--accent)", letterSpacing: "0.15em", minWidth: "2.5rem" }}
+      >
+        {project.id}
+      </span>
+
+      <div className="flex-1">
+        <div className="flex items-start justify-between gap-4 mb-3">
+          <h2
+            className="font-display font-light leading-none text-foreground group-hover:text-stone-accent transition-colors duration-300"
+            style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", transition: "color 0.3s" }}
+          >
+            {project.title}
+          </h2>
+          <div className="flex items-center gap-3 shrink-0 mt-2">
+            <span
+              className="font-mono text-[9px]"
+              style={{ color: "var(--muted)", letterSpacing: "0.15em", opacity: 0.6 }}
+            >
+              {project.year}
+            </span>
+            <span
+              className="font-mono text-[9px] group-hover:opacity-100 transition-opacity duration-300"
+              style={{ color: "var(--accent)", opacity: 0.5, letterSpacing: "0.1em" }}
+            >
+              VIEW →
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 mb-4">
+          <span
+            className="font-mono text-[9px]"
+            style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
+          >
+            {project.category.toUpperCase()}
+          </span>
+          <span
+            className="font-mono text-[9px] px-2 py-0.5 border"
+            style={{
+              letterSpacing: "0.15em",
+              color: isLiveProjectStatus(project.status) ? "var(--accent)" : "var(--muted)",
+              borderColor: isLiveProjectStatus(project.status)
+                ? "rgba(201,185,154,0.4)"
+                : "rgba(140,125,107,0.3)",
+              opacity: isLiveProjectStatus(project.status) ? 1 : 0.6,
+            }}
+          >
+            {formatProjectStatus(project.status)}
+          </span>
+        </div>
+        <p
+          className="font-mono text-[0.75rem] leading-loose max-w-lg"
+          style={{ color: "var(--muted)", opacity: 0.7 }}
+        >
+          {project.description}
+        </p>
+      </div>
+    </>
+  );
+}
 
 export default function ProjectsContent() {
   return (
@@ -49,151 +120,34 @@ export default function ProjectsContent() {
 
       {/* Projects list */}
       <div className="divide-y" style={{ borderColor: "rgba(201,185,154,0.12)" }}>
-        {projects.map((project, i) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: dur, ease, delay: 0.3 + i * 0.1 }}
-            style={{ borderColor: "rgba(201,185,154,0.12)" }}
-          >
-            {project.websiteUrl ? (
-              <a
-                href={project.websiteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group py-10 flex flex-col sm:flex-row sm:items-start gap-6 block"
-              >
-              {/* Index */}
-              <span
-                className="font-mono text-[10px] shrink-0 mt-1"
-                style={{ color: "var(--accent)", letterSpacing: "0.15em", minWidth: "2.5rem" }}
-              >
-                {project.id}
-              </span>
+        {projects.map((project, i) => {
+          const externalUrl = project.websiteUrl ?? project.appStoreUrl;
 
-              {/* Content */}
-              <div className="flex-1">
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <h2
-                    className="font-display font-light leading-none text-foreground group-hover:text-stone-accent transition-colors duration-300"
-                    style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", transition: "color 0.3s" }}
-                  >
-                    {project.title}
-                  </h2>
-                  <div className="flex items-center gap-3 shrink-0 mt-2">
-                    <span
-                      className="font-mono text-[9px]"
-                      style={{ color: "var(--muted)", letterSpacing: "0.15em", opacity: 0.6 }}
-                    >
-                      {project.year}
-                    </span>
-                    <span
-                      className="font-mono text-[9px] group-hover:opacity-100 transition-opacity duration-300"
-                      style={{ color: "var(--accent)", opacity: 0.5, letterSpacing: "0.1em" }}
-                    >
-                      VIEW →
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 mb-4">
-                  <span
-                    className="font-mono text-[9px]"
-                    style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
-                  >
-                    {project.category.toUpperCase()}
-                  </span>
-                  <span
-                    className="font-mono text-[9px] px-2 py-0.5 border"
-                    style={{
-                      letterSpacing: "0.15em",
-                      color: isLiveProjectStatus(project.status) ? "var(--accent)" : "var(--muted)",
-                      borderColor: isLiveProjectStatus(project.status)
-                        ? "rgba(201,185,154,0.4)"
-                        : "rgba(140,125,107,0.3)",
-                      opacity: isLiveProjectStatus(project.status) ? 1 : 0.6,
-                    }}
-                  >
-                    {formatProjectStatus(project.status)}
-                  </span>
-                </div>
-                <p
-                  className="font-mono text-[0.75rem] leading-loose max-w-lg"
-                  style={{ color: "var(--muted)", opacity: 0.7 }}
+          return (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: dur, ease, delay: 0.3 + i * 0.1 }}
+              style={{ borderColor: "rgba(201,185,154,0.12)" }}
+            >
+              {externalUrl ? (
+                <a
+                  href={externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={rowClassName}
                 >
-                  {project.description}
-                </p>
-              </div>
-              </a>
-            ) : (
-              <Link
-                href={`/projects/${project.slug}`}
-                className="group py-10 flex flex-col sm:flex-row sm:items-start gap-6 block"
-              >
-                {/* Index */}
-                <span
-                  className="font-mono text-[10px] shrink-0 mt-1"
-                  style={{ color: "var(--accent)", letterSpacing: "0.15em", minWidth: "2.5rem" }}
-                >
-                  {project.id}
-                </span>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <div className="flex items-start justify-between gap-4 mb-3">
-                    <h2
-                      className="font-display font-light leading-none text-foreground group-hover:text-stone-accent transition-colors duration-300"
-                      style={{ fontSize: "clamp(1.5rem,3vw,2.25rem)", transition: "color 0.3s" }}
-                    >
-                      {project.title}
-                    </h2>
-                    <div className="flex items-center gap-3 shrink-0 mt-2">
-                      <span
-                        className="font-mono text-[9px]"
-                        style={{ color: "var(--muted)", letterSpacing: "0.15em", opacity: 0.6 }}
-                      >
-                        {project.year}
-                      </span>
-                      <span
-                        className="font-mono text-[9px] group-hover:opacity-100 transition-opacity duration-300"
-                        style={{ color: "var(--accent)", opacity: 0.5, letterSpacing: "0.1em" }}
-                      >
-                        VIEW →
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <span
-                      className="font-mono text-[9px]"
-                      style={{ letterSpacing: "0.2em", color: "var(--accent)" }}
-                    >
-                      {project.category.toUpperCase()}
-                    </span>
-                    <span
-                      className="font-mono text-[9px] px-2 py-0.5 border"
-                      style={{
-                        letterSpacing: "0.15em",
-                        color: isLiveProjectStatus(project.status) ? "var(--accent)" : "var(--muted)",
-                        borderColor: isLiveProjectStatus(project.status)
-                          ? "rgba(201,185,154,0.4)"
-                          : "rgba(140,125,107,0.3)",
-                        opacity: isLiveProjectStatus(project.status) ? 1 : 0.6,
-                      }}
-                    >
-                      {formatProjectStatus(project.status)}
-                    </span>
-                  </div>
-                  <p
-                    className="font-mono text-[0.75rem] leading-loose max-w-lg"
-                    style={{ color: "var(--muted)", opacity: 0.7 }}
-                  >
-                    {project.description}
-                  </p>
-                </div>
-              </Link>
-            )}
-          </motion.div>
-        ))}
+                  <ProjectRowContent project={project} />
+                </a>
+              ) : (
+                <Link href={`/projects/${project.slug}`} className={rowClassName}>
+                  <ProjectRowContent project={project} />
+                </Link>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Footer nav */}
