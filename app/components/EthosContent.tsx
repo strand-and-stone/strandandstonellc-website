@@ -26,13 +26,13 @@ const founders: Member[] = [
   {
     name: "John Meeker",
     redactName: false,
-    role: "Chief Technology",
+    role: "Technology",
     bio: "Builds the systems underneath — turning ambitious ideas into reliable, performant experiences that hold up under pressure and scale with intention.",
   },
   {
     name: "Cameron Meeker",
     redactName: false,
-    role: "Chief Creative",
+    role: "Creative",
     bio: "Shapes the visual language of every project — bringing a sharp eye for craft, restraint, and the kind of design that feels inevitable in hindsight.",
   },
 ];
@@ -43,6 +43,30 @@ const team: Member[] = [
     redactName: false,
     role: "Director, Strategic Partnerships",
     bio: "An entrepreneur with a finance background — identifying alignment across organizations and structuring partnerships built for long-term mutual value.",
+  },
+  {
+    name: "Claire Bennett",
+    redactName: false,
+    role: "Designer",
+    bio: "Shapes client work from first sketch to a visual system — the kind of design that feels settled before a single screen is built.",
+  },
+  {
+    name: "Jack Miller",
+    redactName: false,
+    role: "Lead Engineer",
+    bio: "Turns the pitch into software — reliable interfaces and the quiet infrastructure that holds up after launch.",
+  },
+  {
+    name: "Emily Walsh",
+    redactName: false,
+    role: "Brand Strategist",
+    bio: "Writes the language around the work — naming, positioning, and the sentences that make a product feel inevitable.",
+  },
+  {
+    name: "Ryan Cole",
+    redactName: false,
+    role: "Producer",
+    bio: "Keeps engagements moving — scope, schedule, and the discipline that keeps craft intact between kickoff and ship.",
   },
 ];
 
