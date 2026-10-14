@@ -69,7 +69,7 @@ function ProjectRowContent({ project }: { project: Project }) {
         </div>
         <p
           className="font-mono text-[0.75rem] leading-loose max-w-lg"
-          style={{ color: "var(--muted)", opacity: 0.7 }}
+          style={{ color: "var(--body)" }}
         >
           {project.description}
         </p>

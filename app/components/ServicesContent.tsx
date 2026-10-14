@@ -101,7 +101,7 @@ export default function ServicesContent() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: dur, ease, delay: 0.25 }}
         className="font-mono text-[0.8rem] leading-loose mb-20 max-w-2xl"
-        style={{ color: "var(--muted)", opacity: 0.85 }}
+        style={{ color: "var(--body)" }}
       >
         We’re a small studio — strategy, design, and engineering under one roof. No bloated retainers
         pitched in slide one; no handoffs where the vision gets lost. If there’s a fit, we’ll say so. If
@@ -138,7 +138,7 @@ export default function ServicesContent() {
               </h2>
               <p
                 className="font-mono text-[0.78rem] leading-loose max-w-xl"
-                style={{ color: "var(--muted)", opacity: 0.8 }}
+                style={{ color: "var(--body)" }}
               >
                 {a.copy}
               </p>

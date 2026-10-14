@@ -157,7 +157,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: dur, ease, delay: 0.4 + i * 0.08 }}
             className="font-mono text-[0.78rem] leading-loose"
-            style={{ color: "var(--muted)", opacity: 0.8 }}
+            style={{ color: "var(--body)" }}
           >
             {para}
           </motion.p>

@@ -147,7 +147,7 @@ function MemberCard({
         >
           {member.role.toUpperCase()}
         </p>
-        <p className="font-mono text-[0.75rem] leading-loose" style={{ color: "var(--muted)", opacity: 0.7 }}>
+        <p className="font-mono text-[0.75rem] leading-loose" style={{ color: "var(--body)" }}>
           {member.bio}
         </p>
       </div>
@@ -243,21 +243,21 @@ export default function EthosPage() {
       >
         <p
           className="font-display italic text-[1.25rem] leading-relaxed"
-          style={{ color: "var(--muted)" }}
+          style={{ color: "var(--body)" }}
         >
           It started in a Santa Monica apartment in 2013.
         </p>
-        <p className="font-mono text-[0.8rem] leading-loose" style={{ color: "var(--muted)", opacity: 0.8 }}>
+        <p className="font-mono text-[0.8rem] leading-loose" style={{ color: "var(--body)" }}>
           Three friends — drawn together by a shared restlessness with the ordinary — decided to build
           something different. Not a studio, not an agency. A collective of makers who refused to separate
           craft from intention.
         </p>
-        <p className="font-mono text-[0.8rem] leading-loose" style={{ color: "var(--muted)", opacity: 0.8 }}>
+        <p className="font-mono text-[0.8rem] leading-loose" style={{ color: "var(--body)" }}>
           Years passed. Life happened. But the idea never left. Strand &amp; Stone is the culmination of that
           original conversation: a belief that digital experiences should feel as considered and alive as the
           physical world.
         </p>
-        <p className="font-mono text-[0.8rem] leading-loose" style={{ color: "var(--muted)", opacity: 0.8 }}>
+        <p className="font-mono text-[0.8rem] leading-loose" style={{ color: "var(--body)" }}>
           We build with precision, design with restraint, and ship work that endures.
         </p>
       </motion.div>

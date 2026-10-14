@@ -98,7 +98,7 @@ export default function ContactContent() {
         </h1>
         <p
           className="font-mono text-[0.78rem] leading-loose"
-          style={{ color: "var(--muted)", opacity: 0.8 }}
+          style={{ color: "var(--body)" }}
         >
           Got a project in mind, a question, or just want to talk?{" "}
           <a
@@ -146,7 +146,7 @@ export default function ContactContent() {
           </span>
           <p
             className="font-mono text-[0.7rem] max-w-xs leading-relaxed"
-            style={{ color: "var(--muted)", opacity: 0.65 }}
+            style={{ color: "var(--body)" }}
           >
             You should get a short confirmation email in a minute or two — check spam if you don&apos;t see it.
           </p>
