@@ -30,7 +30,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://strandandstonellc.com/sitemap.xml",
-    host: "https://strandandstonellc.com",
+    sitemap: "https://www.strandandstonellc.com/sitemap.xml",
+    host: "https://www.strandandstonellc.com",
   };
 }

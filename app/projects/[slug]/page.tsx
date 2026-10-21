@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = getProject(params.slug);
   if (!project) return {};
 
-  const BASE = "https://strandandstonellc.com";
+  const BASE = "https://www.strandandstonellc.com";
   const url = `${BASE}/projects/${project.slug}`;
 
   return {
