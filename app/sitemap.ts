@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/ethos`, lastModified, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/services`, lastModified, changeFrequency: "monthly", priority: 0.85 },
     { url: `${BASE}/contact`, lastModified, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/privacy`, lastModified, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${BASE}/terms`, lastModified, changeFrequency: "monthly", priority: 0.4 },
     ...projectPages,
   ];
 }

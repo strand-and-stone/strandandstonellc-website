@@ -76,7 +76,7 @@ export const projects: Project[] = [
     year: "2025",
     status: "live",
     description:
-      "The #1 way to end late-night elf panic. AI finds perfect, creative hiding spots so you can get to bed instead of thinking at midnight.",
+      "The easy way to end late-night elf panic. AI finds perfect, creative hiding spots so you can get to bed instead of thinking at midnight.",
     body: [
       "Running out of hiding spots by December 5th? Elfie instantly finds the sneakiest, most genius places in any room.",
       "Snap a photo of any room, Elfie reveals perfect hiding spots your kids will never guess, place your elf and sleep easy. That's it.",

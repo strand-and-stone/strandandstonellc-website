@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import LegalLinks from "./LegalLinks";
 import {
   projects,
   formatProjectStatus,
@@ -155,7 +156,7 @@ export default function ProjectsContent() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: dur, ease, delay: 0.8 }}
-        className="pt-8 mt-8 border-t flex justify-between items-center"
+        className="pt-8 mt-8 border-t flex flex-wrap gap-y-3 justify-between items-center"
         style={{ borderColor: "rgba(201,185,154,0.15)" }}
       >
         <Link
@@ -180,6 +181,7 @@ export default function ProjectsContent() {
           >
             ETHOS →
           </Link>
+          <LegalLinks />
         </div>
       </motion.div>
     </main>

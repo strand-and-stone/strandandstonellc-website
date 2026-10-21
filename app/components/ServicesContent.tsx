@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import LegalLinks from "./LegalLinks";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const dur = 0.8;
@@ -203,6 +204,7 @@ export default function ServicesContent() {
           >
             ETHOS →
           </Link>
+          <LegalLinks />
         </div>
       </motion.div>
     </main>
