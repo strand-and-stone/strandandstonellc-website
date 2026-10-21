@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     "creative technology",
   ],
   alternates: {
-    canonical: "https://strandandstonellc.com/projects",
+    canonical: "https://www.strandandstonellc.com/projects",
   },
   openGraph: {
     title: "Projects — Strand & Stone LLC",
     description:
       "A catalogue of digital experiences, web applications, and brand identities. Built with precision and intention.",
-    url: "https://strandandstonellc.com/projects",
+    url: "https://www.strandandstonellc.com/projects",
     type: "website",
     images: [
       {

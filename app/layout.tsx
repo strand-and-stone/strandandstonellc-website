@@ -23,7 +23,7 @@ const dmMono = DM_Mono({
   preload: true,
 });
 
-const BASE_URL = "https://strandandstonellc.com";
+const BASE_URL = "https://www.strandandstonellc.com";
 
 export const viewport: Viewport = {
   themeColor: "#C9B99A",

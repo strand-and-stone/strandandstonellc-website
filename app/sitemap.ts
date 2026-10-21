@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { projects } from "./data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const BASE = "https://strandandstonellc.com";
+  const BASE = "https://www.strandandstonellc.com";
   const lastModified = new Date();
 
   const projectPages = projects.map((p) => ({

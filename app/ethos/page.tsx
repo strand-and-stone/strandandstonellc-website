@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     "about Strand & Stone",
   ],
   alternates: {
-    canonical: "https://strandandstonellc.com/ethos",
+    canonical: "https://www.strandandstonellc.com/ethos",
   },
   openGraph: {
     title: "Ethos — Strand & Stone LLC",
     description:
       "Founded in 2013 in Santa Monica. Three friends, one shared belief: digital experiences should be as considered and alive as the physical world.",
-    url: "https://strandandstonellc.com/ethos",
+    url: "https://www.strandandstonellc.com/ethos",
     type: "website",
     images: [
       {

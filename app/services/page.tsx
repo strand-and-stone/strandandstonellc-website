@@ -13,13 +13,13 @@ export const metadata: Metadata = {
     "Strand and Stone services",
   ],
   alternates: {
-    canonical: "https://strandandstonellc.com/services",
+    canonical: "https://www.strandandstonellc.com/services",
   },
   openGraph: {
     title: "Services — Strand & Stone LLC",
     description:
       "Creative and technical work for teams who want something considered — direction, product, brand, build, and partnership.",
-    url: "https://strandandstonellc.com/services",
+    url: "https://www.strandandstonellc.com/services",
     type: "website",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Strand & Stone LLC — Services" }],
   },
