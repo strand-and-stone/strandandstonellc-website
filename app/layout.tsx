@@ -4,7 +4,7 @@ import Analytics from "./components/Analytics";
 import JsonLd from "./components/JsonLd";
 import "./globals.css";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-RMZGVPXJ69";
+const GA_ID = "G-W1SRB16CCY";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
