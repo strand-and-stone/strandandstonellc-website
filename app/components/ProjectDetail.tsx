@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import LegalLinks from "./LegalLinks";
 import type { Project } from "../data/projects";
 import { formatProjectStatus, isLiveProjectStatus } from "../data/projects";
 
@@ -178,7 +179,7 @@ export default function ProjectDetail({ project }: { project: Project }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: dur, ease, delay: 0.9 }}
-        className="pt-8 border-t flex justify-between items-center"
+        className="pt-8 border-t flex flex-wrap gap-y-3 justify-between items-center"
         style={{ borderColor: "rgba(201,185,154,0.15)" }}
       >
         <Link
@@ -188,13 +189,16 @@ export default function ProjectDetail({ project }: { project: Project }) {
         >
           ← ALL PROJECTS
         </Link>
-        <Link
-          href="/"
-          className="nav-link font-mono text-[10px] pb-1"
-          style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
-        >
-          HOME
-        </Link>
+        <div className="flex flex-wrap gap-x-8 gap-y-2 justify-end">
+          <Link
+            href="/"
+            className="nav-link font-mono text-[10px] pb-1"
+            style={{ letterSpacing: "0.25em", color: "var(--muted)" }}
+          >
+            HOME
+          </Link>
+          <LegalLinks />
+        </div>
       </motion.div>
     </main>
   );

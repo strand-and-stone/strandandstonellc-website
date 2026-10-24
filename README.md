@@ -7,7 +7,7 @@ Marketing site for [Strand & Stone LLC](https://strandandstonellc.com). Next.js 
 - **Framework:** Next.js 14, TypeScript, Tailwind CSS
 - **Motion:** Framer Motion
 - **Fonts:** Cormorant Garamond (display), DM Mono (body) via `next/font`
-- **Analytics:** Google Analytics 4 (gtag)
+- **Analytics:** Google Analytics 4 (gtag). Google Signals and ads personalization are disabled on the tag. The tag is not loaded when `navigator.globalPrivacyControl === true`. Set event retention to 14 months in GA4 Admin → Data settings → Data retention (that control is not in this repo). Fonts are self-hosted with `next/font`.
 - **Contact form:** [Resend](https://resend.com) — notifies `hello@…` and sends the visitor an auto-reply (`/api/contact`)
 - **Host:** Vercel
 

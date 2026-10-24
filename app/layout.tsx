@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Cormorant_Garamond, DM_Mono } from "next/font/google";
+import Analytics from "./components/Analytics";
 import JsonLd from "./components/JsonLd";
 import "./globals.css";
 
@@ -112,27 +112,9 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dmMono.variable}`}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
       <body className="antialiased">
         <JsonLd />
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="gtag-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}', {
-              allow_google_signals: false,
-              allow_ad_personalization_signals: false,
-            });
-          `}
-        </Script>
+        <Analytics gaId={GA_ID} />
         {children}
       </body>
     </html>
