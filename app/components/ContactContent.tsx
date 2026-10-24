@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import LegalLinks from "./LegalLinks";
 import { useState, useRef, useEffect } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -317,7 +318,7 @@ export default function ContactContent() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: dur, ease, delay: 0.9 }}
-        className="pt-16 mt-16 border-t flex justify-between items-center"
+        className="pt-16 mt-16 border-t flex flex-wrap gap-y-3 justify-between items-center"
         style={{ borderColor: "rgba(201,185,154,0.15)" }}
       >
         <Link
@@ -342,6 +343,7 @@ export default function ContactContent() {
           >
             PROJECTS →
           </Link>
+          <LegalLinks />
         </div>
       </motion.div>
     </main>

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import LegalLinks from "./components/LegalLinks";
 
 const SandCanvas = dynamic(() => import("./components/SandCanvas"), { ssr: false });
 
@@ -106,16 +107,22 @@ export default function NotFound() {
         </motion.nav>
       </div>
 
-      {/* Footer */}
-      <motion.div
+      <motion.footer
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.9, ease, delay: 0.8 }}
-        className="absolute bottom-8 font-mono text-[9px] text-center z-10"
-        style={{ letterSpacing: "0.2em", color: "var(--muted)", opacity: 0.5 }}
+        className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-3 z-10"
       >
-        STRAND &amp; STONE LLC
-      </motion.div>
+        <div
+          className="font-mono text-[9px] text-center"
+          style={{ letterSpacing: "0.2em", color: "var(--muted)", opacity: 0.5 }}
+        >
+          STRAND &amp; STONE LLC
+        </div>
+        <nav aria-label="Legal" className="flex items-center gap-6">
+          <LegalLinks variant="home" />
+        </nav>
+      </motion.footer>
     </main>
   );
 }

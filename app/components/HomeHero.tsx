@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import LegalLinks from "./LegalLinks";
 import MagneticWordmark from "./MagneticWordmark";
 
 // Load canvas lazily — no SSR needed
@@ -108,7 +109,7 @@ export default function HomeHero() {
           className="font-mono text-[9px] text-center"
           style={{ letterSpacing: "0.2em", color: "var(--muted)", opacity: 0.6 }}
         >
-          SANTA MONICA, CA — FOUNDED 2013
+          Strand and Stone LLC
         </div>
         <Link
           href="/contact"
@@ -117,6 +118,9 @@ export default function HomeHero() {
         >
           hello@strandandstonellc.com
         </Link>
+        <nav aria-label="Legal" className="flex items-center gap-6">
+          <LegalLinks variant="home" />
+        </nav>
       </motion.footer>
     </main>
   );
