@@ -4,7 +4,7 @@ import { Cormorant_Garamond, DM_Mono } from "next/font/google";
 import JsonLd from "./components/JsonLd";
 import "./globals.css";
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "G-RMZGVPXJ69";
+const GA_ID = "G-W1SRB16CCY";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -127,7 +127,10 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${GA_ID}');
+            gtag('config', '${GA_ID}', {
+              allow_google_signals: false,
+              allow_ad_personalization_signals: false,
+            });
           `}
         </Script>
         {children}
