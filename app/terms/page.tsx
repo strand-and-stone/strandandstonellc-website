@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   description:
     "Terms of Use for strandandstonellc.com, operated by Strand and Stone LLC, a New Mexico limited liability company.",
   alternates: {
-    canonical: "https://strandandstonellc.com/terms",
+    canonical: "https://www.strandandstonellc.com/terms",
   },
   openGraph: {
     title: "Terms of Use — Strand & Stone LLC",
     description:
       "Terms of Use for strandandstonellc.com, operated by Strand and Stone LLC.",
-    url: "https://strandandstonellc.com/terms",
+    url: "https://www.strandandstonellc.com/terms",
     type: "website",
   },
 };
@@ -22,7 +22,7 @@ export default function TermsPage() {
   return (
     <LegalDocument kicker="TERMS" title="Terms of Use">
       <p>
-        <LegalLead>Effective date:</LegalLead> October 21, 2026
+        <LegalLead>Effective date:</LegalLead> October 23, 2026
       </p>
       <p>
         These Terms govern your use of strandandstonellc.com (the &quot;Site&quot;), operated by
@@ -66,7 +66,7 @@ export default function TermsPage() {
         or federal courts in New Mexico.
       </p>
       <p>
-        <LegalLead>Contact.</LegalLead> robert@strandandstonellc.com
+        <LegalLead>Contact.</LegalLead> hello@strandandstonellc.com
       </p>
     </LegalDocument>
   );

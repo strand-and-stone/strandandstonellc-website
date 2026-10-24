@@ -6,13 +6,13 @@ export const metadata: Metadata = {
   description:
     "Privacy Policy for Strand and Stone LLC, a New Mexico limited liability company, operator of strandandstonellc.com.",
   alternates: {
-    canonical: "https://strandandstonellc.com/privacy",
+    canonical: "https://www.strandandstonellc.com/privacy",
   },
   openGraph: {
     title: "Privacy Policy — Strand & Stone LLC",
     description:
       "Privacy Policy for Strand and Stone LLC, operator of strandandstonellc.com.",
-    url: "https://strandandstonellc.com/privacy",
+    url: "https://www.strandandstonellc.com/privacy",
     type: "website",
   },
 };
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
   return (
     <LegalDocument kicker="PRIVACY" title="Privacy Policy">
       <p>
-        <LegalLead>Effective date:</LegalLead> October 21, 2026
+        <LegalLead>Effective date:</LegalLead> October 23, 2026
       </p>
       <p>
         Strand and Stone LLC, a New Mexico limited liability company (entity no.
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
         <ul className="list-disc space-y-3 pl-5">
           <li>
             <em>Contact form:</em> the email address and message you send us through the
-            contact page, delivered to [FORM PROVIDER/INBOX].
+            contact page, delivered to hello@strandandstonellc.com via Resend.
           </li>
           <li>
             <em>Server logs:</em> our host, Vercel, automatically records basic request data
@@ -70,13 +70,13 @@ export default function PrivacyPage() {
       </p>
       <p>
         <LegalLead>Retention.</LegalLead> Contact messages are kept as long as needed to handle
-        your inquiry and our business records. Analytics data is kept up to 14 months. Host logs
-        are kept briefly under Vercel&apos;s own schedule.
+        your inquiry and our business records. Google Analytics data is retained for 14 months.
+        Host logs are kept briefly under Vercel&apos;s own schedule.
       </p>
       <p>
         <LegalLead>Your rights.</LegalLead> US residents of states with privacy laws may ask to
         know, access, correct or delete their personal information, or to opt out. Email
-        robert@strandandstonellc.com. We respond within 45 days, and you may appeal a denial by
+        hello@strandandstonellc.com. We respond within 45 days, and you may appeal a denial by
         replying.
       </p>
       <p>
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
         <LegalLead>Changes.</LegalLead> Updates will be posted here with a new effective date.
       </p>
       <p>
-        <LegalLead>Contact.</LegalLead> robert@strandandstonellc.com
+        <LegalLead>Contact.</LegalLead> hello@strandandstonellc.com
       </p>
     </LegalDocument>
   );
