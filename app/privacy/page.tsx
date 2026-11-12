@@ -21,7 +21,7 @@ export default function PrivacyPage() {
   return (
     <LegalDocument kicker="PRIVACY" title="Privacy Policy">
       <p>
-        <LegalLead>Effective date:</LegalLead> October 23, 2026
+        <LegalLead>Effective date:</LegalLead> November 12, 2026
       </p>
       <p>
         Strand and Stone LLC, a New Mexico limited liability company (entity no.
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
         <ul className="list-disc space-y-3 pl-5">
           <li>
             <em>Contact form:</em> the email address and message you send us through the
-            contact page, delivered to hello@strandandstonellc.com via Resend.
+            contact page, delivered to hello@strandandstonellc.com through Zoho Mail.
           </li>
           <li>
             <em>Server logs:</em> our host, Vercel, automatically records basic request data
