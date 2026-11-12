@@ -8,7 +8,7 @@ Marketing site for [Strand & Stone LLC](https://strandandstonellc.com). Next.js 
 - **Motion:** Framer Motion
 - **Fonts:** Cormorant Garamond (display), DM Mono (body) via `next/font`
 - **Analytics:** Google Analytics 4 (gtag). Google Signals and ads personalization are disabled on the tag. The tag is not loaded when `navigator.globalPrivacyControl === true`. Set event retention to 14 months in GA4 Admin → Data settings → Data retention (that control is not in this repo). Fonts are self-hosted with `next/font`.
-- **Contact form:** [Resend](https://resend.com) — notifies `hello@…` and sends the visitor an auto-reply (`/api/contact`)
+- **Contact form:** Zoho Mail SMTP via nodemailer — notifies the studio inbox and sends the visitor an auto-reply (`/api/contact`)
 - **Host:** Vercel
 
 ## Repo
@@ -26,19 +26,20 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment variables
 
+Contact mail is sent with nodemailer over Zoho SMTP (`smtp.zoho.com`, port 465, SSL). Names only — do not commit values.
+
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `RESEND_API_KEY` | **Yes** (contact form) | API key from [Resend](https://resend.com). Without it, the form returns 503 (dev shows a hint to add `.env.local`). Aliases **`RESEND_TOKEN`** and **`RESEND_KEY`** are also read if `RESEND_API_KEY` is unset. |
-| `CONTACT_FROM_EMAIL` | Recommended | Verified sender, e.g. `Strand & Stone <hello@strandandstonellc.com>`. Until your domain is verified in Resend, use `Strand & Stone <onboarding@resend.dev>` (sending may be limited to your own inbox on the free tier). |
-| `CONTACT_TO_EMAIL` | Optional | Inbox for form submissions. Default: `hello@strandandstonellc.com`. |
+| `ZOHO_SMTP_USER` | **Yes** (contact form) | Zoho mailbox login. The message **From** address is this value; Zoho rejects any other sender. |
+| `ZOHO_SMTP_PASS` | **Yes** (contact form) | Zoho app password for `ZOHO_SMTP_USER`. |
+| `CONTACT_TO_EMAIL` | Optional | Inbox that receives form submissions. Defaults to `ZOHO_SMTP_USER` when unset. |
+| `ZOHO_SMTP_HOST` | Optional | SMTP host. Defaults to `smtp.zoho.com` when unset. |
 | `NEXT_PUBLIC_SITE_URL` | Optional | Production site URL (no trailing slash) for stricter `Origin` checks on the contact API. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | GA4 measurement ID; falls back to hardcoded ID if unset. |
 
-**Resend setup:** Add and verify **strandandstonellc.com** in Resend, then create an API key and set `CONTACT_FROM_EMAIL` to an address on that domain.
+**What each submit does:** (1) Email to `CONTACT_TO_EMAIL` (or `ZOHO_SMTP_USER`) with name, email, and message — **From** is `ZOHO_SMTP_USER`, **Reply-To** is the visitor. (2) Auto-reply to the visitor confirming receipt — **Reply-To** is the same inbox so they can follow up. If the auto-reply fails, the team email still went out (check server logs).
 
-**What each submit does:** (1) Email to `CONTACT_TO_EMAIL` (default `hello@strandandstonellc.com`) with name, email, and message — **Reply-To** is the visitor. (2) Auto-reply to the visitor confirming receipt — **Reply-To** is `hello@…` so they can follow up. If the auto-reply fails, the team email still went out (check server logs).
-
-Set variables in Vercel under **Settings → Environment Variables**. For the live site, add `RESEND_API_KEY` (and recommended `CONTACT_FROM_EMAIL`) with **Environment** = **Production** (not only Preview/Development), then **Redeploy** so the new values load. If `RESEND_API_KEY` is missing in Production, the contact form shows a generic “try again” message and the function logs a `[contact] RESEND_API_KEY is missing…` line in Vercel → Logs.
+Set variables in Vercel under **Settings → Environment Variables** for **Production** (and Preview, if the form should work there), then **Redeploy** so the new values load. If `ZOHO_SMTP_USER` or `ZOHO_SMTP_PASS` is missing, the contact form shows a generic “try again” message and the function logs a `[contact]` line naming `ZOHO_SMTP_USER` and `ZOHO_SMTP_PASS`.
 
 ## Deploy
 
