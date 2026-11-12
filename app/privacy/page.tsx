@@ -1,35 +1,5 @@
-import { execSync } from "node:child_process";
 import type { Metadata } from "next";
 import LegalDocument, { LegalLead } from "../components/LegalDocument";
-
-const EFFECTIVE_DATE_MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-] as const;
-
-/** Committer date of the commit this build renders. A merge-commit deploy shows the merge date. */
-function policyEffectiveDate(): string {
-  const isoDay = execSync("git log -1 --format=%cs", { encoding: "utf8" }).trim();
-  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDay);
-  const month = match ? EFFECTIVE_DATE_MONTHS[Number(match[2]) - 1] : undefined;
-  const day = match ? Number(match[3]) : NaN;
-  if (!match || !month || day < 1 || day > 31) {
-    throw new Error(`Unexpected commit date from git: ${isoDay}`);
-  }
-  return `${month} ${day}, ${match[1]}`;
-}
-
-const effectiveDate = policyEffectiveDate();
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -51,7 +21,7 @@ export default function PrivacyPage() {
   return (
     <LegalDocument kicker="PRIVACY" title="Privacy Policy">
       <p>
-        <LegalLead>Effective date:</LegalLead> {effectiveDate}
+        <LegalLead>Effective date:</LegalLead> November 12, 2026
       </p>
       <p>
         Strand and Stone LLC, a New Mexico limited liability company (entity no.
