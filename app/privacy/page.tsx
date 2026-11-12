@@ -1,5 +1,35 @@
+import { execSync } from "node:child_process";
 import type { Metadata } from "next";
 import LegalDocument, { LegalLead } from "../components/LegalDocument";
+
+const EFFECTIVE_DATE_MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
+
+/** Committer date of the commit this build renders. A merge-commit deploy shows the merge date. */
+function policyEffectiveDate(): string {
+  const isoDay = execSync("git log -1 --format=%cs", { encoding: "utf8" }).trim();
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(isoDay);
+  const month = match ? EFFECTIVE_DATE_MONTHS[Number(match[2]) - 1] : undefined;
+  const day = match ? Number(match[3]) : NaN;
+  if (!match || !month || day < 1 || day > 31) {
+    throw new Error(`Unexpected commit date from git: ${isoDay}`);
+  }
+  return `${month} ${day}, ${match[1]}`;
+}
+
+const effectiveDate = policyEffectiveDate();
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -21,7 +51,7 @@ export default function PrivacyPage() {
   return (
     <LegalDocument kicker="PRIVACY" title="Privacy Policy">
       <p>
-        <LegalLead>Effective date:</LegalLead> October 23, 2026
+        <LegalLead>Effective date:</LegalLead> {effectiveDate}
       </p>
       <p>
         Strand and Stone LLC, a New Mexico limited liability company (entity no.
@@ -35,7 +65,7 @@ export default function PrivacyPage() {
         <ul className="list-disc space-y-3 pl-5">
           <li>
             <em>Contact form:</em> the email address and message you send us through the
-            contact page, delivered to hello@strandandstonellc.com via Resend.
+            contact page, delivered to hello@strandandstonellc.com through Zoho Mail.
           </li>
           <li>
             <em>Server logs:</em> our host, Vercel, automatically records basic request data
