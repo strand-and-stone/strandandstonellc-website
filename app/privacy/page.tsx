@@ -21,7 +21,7 @@ export default function PrivacyPage() {
   return (
     <LegalDocument kicker="PRIVACY" title="Privacy Policy">
       <p>
-        <LegalLead>Effective date:</LegalLead> November 12, 2026
+        <LegalLead>Effective date:</LegalLead> November 18, 2026
       </p>
       <p>
         Strand and Stone LLC, a New Mexico limited liability company (entity no.
