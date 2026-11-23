@@ -63,12 +63,6 @@ const team: Member[] = [
     role: "Brand Strategist",
     bio: "Writes the language around the work — naming, positioning, and the sentences that make a product feel inevitable.",
   },
-  {
-    name: "Ryan Cole",
-    redactName: false,
-    role: "Producer",
-    bio: "Keeps engagements moving — scope, schedule, and the discipline that keeps craft intact between kickoff and ship.",
-  },
 ];
 
 function MemberCard({
